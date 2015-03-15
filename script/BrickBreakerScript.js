@@ -74,23 +74,24 @@ function startGame() {
         }
     });
 
-    player.moveLeft = function () {
+
+    player.moveLeft = function () {console.log('player.moveLeft called');
         player.left = player.left - player.shift;
         if (player.left < 0) { player.left = 0;}
-    }
+    };
 
-    player.moveRight = function () {
+    player.moveRight = function () {console.log('player.moveRight called');
         player.left = player.left + player.shift;
         if (player.left > (arena.width - player.width)) { player.left = arena.width - player.width; }
-    }
+    };
 
-    bullet.fire = function () {
+    bullet.fire = function () {console.log(bullet.fire);
         if (bullet.status === "sleeping") {                    
             bullet.left = player.left + player.width / 2 - bullet.width / 2;
             bullet.top = player.top - bullet.height;
             bullet.status = "running";
         }
-    }
+    };
 
     $('#moveLeft').click(function () {
         player.moveLeft();
@@ -257,7 +258,7 @@ function createCharacters() {
                     //alert("Game Over...");
                     clearInterval(interval1);
                     clearInterval(interval2);
-                    $("#Scoreboard").html("<br/> GAME OVER");
+                    $("#Scoreboard").append("<br/> GAME OVER");
                     $("#Scoreboard").animate({
                         "height": 120 + "px"
                     });
@@ -270,8 +271,12 @@ function createCharacters() {
         }
     }
 
+    var oldval = 0;
     function drawPlayer()
     {
+        //testing
+        //if(player.left !== oldval) {console.log('old='+oldval+" new="+player.left);oldval = player.left;}
+
         $("#player").css({ "left": player.left + "px" });
     }
 

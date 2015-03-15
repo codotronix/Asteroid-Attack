@@ -82,25 +82,25 @@ button:hover
 #moveLeft
 {
     left: 2px;
-    bottom: 2px;
+    bottom: 82px;
 }
 
 #moveRight
 {
     right: 2px;
-    bottom: 2px;
+    bottom: 82px;
 }
 
 #leftFireButton
 {
     left: 2px;
-    bottom: 45px;
+    bottom: 125px;
 }
 
 #rightFireButton
 {
     right: 2px;
-    bottom: 45px;
+    bottom: 125px;
 }
 
 #restart
