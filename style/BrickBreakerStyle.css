@@ -59,6 +59,59 @@
     background: #99F;
     background: url('../images/bof.png') 0 0 no-repeat;
 }
+
+button
+{
+    background: rgba(65,89,155,.3);
+    position: absolute;
+    padding: 10px;
+    color: #FFF;
+    font-size: 17px;
+    outline: none;
+    border: none;
+    border-radius: 5px; 
+    width: 70px;
+    display: none;
+}
+
+button:hover
+{
+    background: rgba(65,89,155,.4);
+}
+
+#moveLeft
+{
+    left: 2px;
+    bottom: 2px;
+}
+
+#moveRight
+{
+    right: 2px;
+    bottom: 2px;
+}
+
+#leftFireButton
+{
+    left: 2px;
+    bottom: 45px;
+}
+
+#rightFireButton
+{
+    right: 2px;
+    bottom: 45px;
+}
+
+#restart
+{
+    top: 230px;
+    left: 0;
+    padding: 20px;
+    width: inherit;
+    font-weight: bold;
+}
+
 /*
 #flyingPoint {
     position:absolute;

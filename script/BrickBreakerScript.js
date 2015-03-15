@@ -2,7 +2,11 @@ $(function () {
     //On Clicking on start screen the game should start
     $('#startScreen').on('click',function () {
         $(this).hide();
-        $('#Scoreboard').show();
+        startGame();
+    });
+
+    $('#restart').click(function () {
+        $(this).hide();
         startGame();
     });
 });
@@ -58,34 +62,55 @@ function startGame() {
     $(document).keydown(function (e) {
         //alert(e.keyCode);
 
-        switch (e.keyCode)
-        {
+        switch (e.keyCode) {
             case 37:        //Left Arrow Pressed
-                //alert("Left arrow pressed");
-                player.left = player.left - player.shift;
-                if (player.left < 0) { player.left = 0;}
+                player.moveLeft();
                 break;
             case 39:        //Right Arrow Pressed
-                //alert("Right arrow pressed");
-                player.left = player.left + player.shift;
-                if (player.left > (arena.width - player.width)) { player.left = arena.width - player.width; }
+                player.moveRight();
                 break;
             case 32:        // space to fire
-                if (bullet.status === "sleeping")
-                {                    
-                    bullet.left = player.left + player.width / 2 - bullet.width / 2;
-                    bullet.top = player.top - bullet.height;
-                    bullet.status = "running";
-                }
+                bullet.fire();
         }
+    });
 
+    player.moveLeft = function () {
+        player.left = player.left - player.shift;
+        if (player.left < 0) { player.left = 0;}
+    }
+
+    player.moveRight = function () {
+        player.left = player.left + player.shift;
+        if (player.left > (arena.width - player.width)) { player.left = arena.width - player.width; }
+    }
+
+    bullet.fire = function () {
+        if (bullet.status === "sleeping") {                    
+            bullet.left = player.left + player.width / 2 - bullet.width / 2;
+            bullet.top = player.top - bullet.height;
+            bullet.status = "running";
+        }
+    }
+
+    $('#moveLeft').click(function () {
+        player.moveLeft();
+    });
+
+    $('#moveRight').click(function () {
+        player.moveRight();
+    });
+
+    $('#leftFireButton, #rightFireButton').click(function () {
+        bullet.fire();
     });
 
     //call init
     init();
     
     function init()
-    {
+    {   
+        $('#Scoreboard, button:not(#restart)').show();
+        $('#Scoreboard').html('SCORE : 0').css('height','initial');    
         createCharacters();
         //init variables
         bricks.width = parseInt($(".brickSize").css("width"));
@@ -119,6 +144,11 @@ function startGame() {
     //createCharacters() function will create enemy blocks and add them to DOM
 //var brick = 'brick';
 function createCharacters() {
+    //if old characters already exist, remove them 1st
+    if($('.brickSize').length != 0) {
+        $('.brickSize').remove();
+    }
+    
     var brickTop = 40;
     var brickLeft = 80;
     var brickID = 0;
@@ -165,7 +195,7 @@ function createCharacters() {
         });
         */
 
-        window.requestAnimationFrame(scrollStars, 100);
+        arena.scrollStarAnimID = window.requestAnimationFrame(scrollStars);
     }
 
     
@@ -207,15 +237,18 @@ function createCharacters() {
                         "top": 0
                     }).fadeOut();
                     player.score += 100;
-                    document.getElementById("Scoreboard").innerHTML = "Score : " + player.score;
+                    $("#Scoreboard").html("Score : " + player.score);
                     if (player.score == 2000)
                     {
                         clearInterval(interval1);
                         clearInterval(interval2);
-                        document.getElementById("Scoreboard").innerHTML += "<br/> CONGRATULATION !!!";
+                        $("#Scoreboard").append("<br/>CONGRATULATION");
                         $("#Scoreboard").animate({
                             "height": 120 + "px"
                         });
+                        window.cancelAnimationFrame(arena.scrollStarAnimID);                        
+                        $('button').hide();
+                        $('#restart').show();                 
                     }
                 }
                 else if(top + bricks.height > player.top)           // Bricks Touching Player??? Then Game Over
@@ -224,10 +257,13 @@ function createCharacters() {
                     //alert("Game Over...");
                     clearInterval(interval1);
                     clearInterval(interval2);
-                    document.getElementById("Scoreboard").innerHTML += "<br/> GAME OVER";
+                    $("#Scoreboard").html("<br/> GAME OVER");
                     $("#Scoreboard").animate({
                         "height": 120 + "px"
                     });
+                    window.cancelAnimationFrame(arena.scrollStarAnimID);
+                    $('button').hide();
+                    $('#restart').show();
                 }
             }
 
