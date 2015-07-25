@@ -1,7 +1,7 @@
 $(function () {
     //On Clicking on start screen the game should start
     $('#startScreen').on('click',function () {
-        $(this).hide();
+        $(this).remove();
         startGame();
     });
 
@@ -9,6 +9,22 @@ $(function () {
         $(this).hide();
         startGame();
     });
+
+    var prev = -1;
+    var now = -1;
+    $(document).on('click touchend', function (ev) {
+        console.log(new Date().getTime() + " " + ev.target.id);
+        if (prev == -1) {
+            prev = new Date().getTime();
+        } else {
+            now = new Date().getTime();
+            if ((now - prev) < 500) { //console.log('dTap found = ' + (now - prev));
+                ev.preventDefault();
+            }
+            prev = now;
+        }
+        //console.log('clicked');
+    }); 
 });
 
 function startGame() {
