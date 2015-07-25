@@ -32,11 +32,8 @@ function startGame() {
     var arena = {};
     arena.width = parseInt($("#arena").css("width"));
     arena.height = parseInt($("#arena").css("height"));
-    arena.skyXlimit = -126;  //it can increase upto 0 based on image size
-    arena.skyYlimit = -630; //it can increase upto 0 based on image size
-    arena.skyX = -126;  //it can increase upto 0 
-    arena.skyY = -630; //it can increase upto 0
-    arena.speedX = 0;
+    arena.skyX = 0;  //it can increase upto 0 
+    arena.skyY = 0; //it can increase upto 0
     arena.speedY = 2;
     //alert("arena height = " + arena.height + " and arena width = " + arena.width);
 
@@ -185,25 +182,7 @@ function createCharacters() {
     //this function will scroll the background to give an illussion of moving stars
     var bgPosition;
     function scrollStars () {
-        arena.skyX += arena.speedX;
-        //console.log(arena.skyX);
-        arena.skyY += arena.speedY;
-
-        //check Y boundary
-        if(arena.skyY > 0) {
-            arena.skyY = arena.skyYlimit;
-        }
-
-        //check X boundary
-        if (arena.skyX > 0) {
-            arena.skyX = 0;
-            arena.speedX = arena.speedX * -1;
-        } 
-        else if (arena.skyX < arena.skyXlimit) {
-            arena.skyX = arena.skyXlimit;
-            arena.speedX = arena.speedX * -1;
-        }
-
+        arena.skyY += arena.speedY; 
         bgPosition = arena.skyX + 'px ' + arena.skyY + 'px';
         $('#arena').css('background-position', bgPosition);
         /*
@@ -268,7 +247,7 @@ function createCharacters() {
                         $('#restart').show();                 
                     }
                 }
-                else if(top + bricks.height > player.top)           // Bricks Touching Player??? Then Game Over
+                else if (top + bricks.height > player.top) // Bricks Touching Player??? Then Game Over
                 {
                     $(".brickSize").fadeOut();
                     //alert("Game Over...");
@@ -346,7 +325,5 @@ function createCharacters() {
         bricks.turn++;
         if (bricks.turn == 6) { bricks.turn = 1;}
     }
-
-
     
 }

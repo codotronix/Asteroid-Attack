@@ -16,7 +16,7 @@
     width: 520px;
     height: 600px;
     overflow: hidden;
-    background: url('../images/nightSky.png') -126px -630px no-repeat;
+    background: url('../images/nightSky.png') 0 0 repeat;
 }
 
 #startScreen{
