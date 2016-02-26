@@ -77,6 +77,7 @@ function startGame() {
                     bullet.top = player.top - bullet.height;
                     bullet.status = "running";
                 }
+                break;
         }
 
     });
